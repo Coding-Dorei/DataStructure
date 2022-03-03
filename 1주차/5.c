@@ -3,25 +3,19 @@
 #include<string.h>
 
 typedef struct {
-	int hour;
-	int min;
-	int sec;
-}TIME;
+	int hour, min, sec;
+}time;
 
 int main() {
-	TIME early = { 0, }, late = { 0, }, gap = { 0, };
-	scanf("%d %d %d", &early.hour, &early.min, &early.sec);
-	scanf("%d %d %d", &late.hour, &late.min, &late.sec);
-	gap.hour = late.hour - early.hour;
-	gap.min = late.min - early.min;
-	gap.sec = late.sec - early.sec;
-	if (gap.sec < 0) {
-		gap.sec += 60;
-		gap.min -= 1;
-	}
-	if (gap.min < 0) {
-		gap.min += 60;
-		gap.hour -= 1;
-	}
-	printf("%d %d %d", gap.hour, gap.min, gap.sec);
+	time before = { 0, }, after = { 0, };
+	scanf("%d%d%d", &before.hour, &before.min, &before.sec);
+	before.sec += before.hour * 60 * 60 + before.min * 60;
+	scanf("%d%d%d", &after.hour, &after.min, &after.sec);
+	after.sec += after.hour * 60 * 60 + after.min * 60;
+	after.sec = after.sec - before.sec;
+	after.hour = after.sec / 3600;
+	after.sec %= 3600;
+	after.min = after.sec / 60;
+	after.sec %= 60;
+	printf("%d %d %d", after.hour, after.min, after.sec);
 }
